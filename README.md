@@ -4,17 +4,17 @@ A Role-Based Access Control (RBAC) Admin Panel built with React and integrated w
 
 
 ## Features
-  - ** Role management (Add, Edit, Delete)
-  - **User management (Add, Edit, Delete)
-  - **Active/Inactive status toggle for users
-  - **Dynamic role assignment to users
-  - **Responsive design with modern UI
+  -  Role management (Add, Edit, Delete)
+  -  User management (Add, Edit, Delete)
+  -  Active/Inactive status toggle for users
+  -  Dynamic role assignment to users
+  -  Responsive design with modern UI
 
 ## Technologies Used
 
-  - **Frontend: React.js, Bootstrap
-  - **Backend: JSON RESTful API
-  - **State Management: React Hooks
+  - Frontend: React.js, Bootstrap
+  - Backend: JSON RESTful API
+  - State Management: React Hooks
 
 
 ## How to Use
