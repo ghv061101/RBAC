@@ -32,7 +32,7 @@ const Appheader = () => {
             {showMenu && (
                 <nav className="navbar navbar-expand-lg navbar-light bg-warning shadow-sm">
                     <div className="container">
-                        <Link className="navbar-brand" to="/">MyApp</Link>
+                        <Link className="navbar-brand" to="/">RBAC</Link>
                         <button
                             className="navbar-toggler"
                             type="button"
@@ -46,9 +46,9 @@ const Appheader = () => {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav me-auto">
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link className="nav-link btn btn-outline-secondary me-2" to="/">Home</Link>
-                                </li>
+                                </li> */}
                                 {/* User Management Link */}
                                 <li className="nav-item dropdown">
                                     <a

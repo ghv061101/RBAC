@@ -1,122 +1,101 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebase"; // Import auth from your firebase.js
 
 const Login = () => {
-    const [username, usernameupdate] = useState('');
-    const [password, passwordupdate] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const usenavigate = useNavigate();
 
-    const usenavigate=useNavigate();
+    // Clear session storage on component load
+    useEffect(() => {
+        sessionStorage.clear();
+    }, []);
 
-    useEffect(()=>{
-sessionStorage.clear();
-    },[]);
-
-    const ProceedLogin = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         if (validate()) {
-            ///implentation
-            // console.log('proceed');
-            fetch("http://localhost:8001/user/" + username).then((res) => {
-                return res.json();
-            }).then((resp) => {
-                //console.log(resp)
-                if (Object.keys(resp).length === 0) {
-                    toast.error('Please Enter valid username');
-                } else {
-                    if (resp.password === password) {
-                        toast.success('Success');
-                        sessionStorage.setItem('username',username);
-                        sessionStorage.setItem('userrole',resp.role);
-                        usenavigate('/')
-                    }else{
-                        toast.error('Please Enter valid credentials');
-                    }
-                }
-            }).catch((err) => {
-                toast.error('Login Failed due to :' + err.message);
-            });
+            // Proceed with Firebase authentication
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Successful login
+                    const user = userCredential.user;
+                    toast.success('Login Successful');
+                    
+                    // Save necessary user information to sessionStorage
+                    sessionStorage.setItem('username', user.email); // or any other user information
+                    sessionStorage.setItem('userrole', 'user'); // You can replace with user role if available
+                    sessionStorage.setItem('jwttoken', user.refreshToken); // Store Firebase refresh token if needed
+                    
+                    // Navigate to the home page
+                    usenavigate('/');
+                })
+                .catch((error) => {
+                    toast.error('Login failed: ' + error.message);
+                });
         }
-    }
+    };
 
-    const ProceedLoginusingAPI = (e) => {
-        e.preventDefault();
-        if (validate()) {
-            ///implentation
-            // console.log('proceed');
-            let inputobj={"username": username,
-            "password": password};
-            fetch("https://localhost:44308/User/Authenticate",{
-                method:'POST',
-                headers:{'content-type':'application/json'},
-                body:JSON.stringify(inputobj)
-            }).then((res) => {
-                return res.json();
-            }).then((resp) => {
-                console.log(resp)
-                if (Object.keys(resp).length === 0) {
-                    toast.error('Login failed, invalid credentials');
-                }else{
-                     toast.success('Success');
-                     sessionStorage.setItem('username',username);
-                     sessionStorage.setItem('jwttoken',resp.jwtToken);
-                   usenavigate('/')
-                }
-                // if (Object.keys(resp).length === 0) {
-                //     toast.error('Please Enter valid username');
-                // } else {
-                //     if (resp.password === password) {
-                //         toast.success('Success');
-                //         sessionStorage.setItem('username',username);
-                //         usenavigate('/')
-                //     }else{
-                //         toast.error('Please Enter valid credentials');
-                //     }
-                // }
-            }).catch((err) => {
-                toast.error('Login Failed due to :' + err.message);
-            });
-        }
-    }
     const validate = () => {
         let result = true;
-        if (username === '' || username === null) {
+        if (email === '' || email === null) {
             result = false;
-            toast.warning('Please Enter Username');
+            toast.warning('Please Enter Email');
         }
         if (password === '' || password === null) {
             result = false;
             toast.warning('Please Enter Password');
         }
         return result;
-    }
+    };
+
     return (
-        <div className="row">
-            <div className="offset-lg-3 col-lg-6" style={{ marginTop: '100px' }}>
-                <form onSubmit={ProceedLogin} className="container">
-                    <div className="card">
-                        <div className="card-header">
+        <div className="container">
+            <div className="row justify-content-center" style={{ marginTop: '100px' }}>
+                <div className="col-md-6">
+                    <div className="card shadow-lg">
+                        <div className="card-header text-center">
                             <h2>User Login</h2>
                         </div>
                         <div className="card-body">
-                            <div className="form-group">
-                                <label>User Name <span className="errmsg">*</span></label>
-                                <input value={username} onChange={e => usernameupdate(e.target.value)} className="form-control"></input>
-                            </div>
-                            <div className="form-group">
-                                <label>Password <span className="errmsg">*</span></label>
-                                <input type="password" value={password} onChange={e => passwordupdate(e.target.value)} className="form-control"></input>
-                            </div>
+                            <form onSubmit={handleLogin}>
+                                <div className="mb-3">
+                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        className="form-control"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        placeholder="Enter your email"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="password" className="form-label">Password</label>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        className="form-control"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        placeholder="Enter your password"
+                                    />
+                                </div>
+                                <div className="d-grid gap-2">
+                                    <button type="submit" className="btn btn-primary">Login</button>
+                                </div>
+                            </form>
                         </div>
-                        <div className="card-footer">
-                            <button type="submit" className="btn btn-primary">Login</button> |
-                            <Link className="btn btn-success" to={'/register'}>New User</Link>
+                        <div className="card-footer text-center">
+                            <p>Don't have an account? <Link to="/register" className="btn btn-link text-black">Sign Up</Link></p>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
-}
+};
 
 export default Login;
