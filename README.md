@@ -37,13 +37,15 @@ A Role-Based Access Control (RBAC) Admin Panel built with React and integrated w
    - Run the below command to start the project locally.
    
     npm start
-
+    
 3. **Json Rest Api dependencies:**
+
+   ```bash
+   npm install -g json-server
    ```
-    npm install -g json-server
    ```
-   ```
-    json-server db.json --port 8001
+   json-server db.json --port 8001
+
 
 
 
