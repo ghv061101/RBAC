@@ -1,0 +1,37 @@
+{
+  "user": [
+    {
+      "id": "adminuser",
+      "name": "Arsha",
+      "password": "admin",
+      "email": "arsha@gmail.com",
+      "phone": "8989898989",
+      "country": "USA",
+      "address": "123 Admin St, City, Country",
+      "role": "admin",
+      "gender": "female"
+    },
+    {
+      "id": "ntuser",
+      "name": "Full Name",
+      "password": "ntuser",
+      "email": "email@email.com",
+      "phone": "56778889989",
+      "country": "Singapore",
+      "address": "Address 1, Address 2, Singapore",
+      "role": "user",
+      "gender": "male"
+    },
+    {
+      "id": "guestuser",
+      "name": "Guest User",
+      "password": "guest",
+      "email": "guest@domain.com",
+      "phone": "1234567890",
+      "country": "Canada",
+      "address": "456 Guest Rd, City, Canada",
+      "role": "guest",
+      "gender": "male"
+    }
+  ]
+}
