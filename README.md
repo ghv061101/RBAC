@@ -41,6 +41,8 @@ A Role-Based Access Control (RBAC) Admin Panel built with React and integrated w
 3. **Json Rest Api dependencies:**
    ```
     npm install -g json-server
+   ```
+   ```
     json-server db.json --port 8001
 
 
