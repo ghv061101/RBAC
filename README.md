@@ -13,7 +13,7 @@ A Role-Based Access Control (RBAC) Admin Panel built with React and integrated w
 ## Technologies Used
 
   - **Frontend: React.js, Bootstrap
-  - **Backend: JSON RESTful API
+  - **Backend: Firebase
   - **State Management: React Hooks
 
 
